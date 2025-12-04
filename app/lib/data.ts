@@ -154,13 +154,14 @@ export async function fetchInvoiceById(id: string) {
       WHERE invoices.id = ${id};
     `;
 
-    const invoice = data.map((invoice) => ({
+    const [invoice] = data.map((invoice) => ({
       ...invoice,
       // Convert amount from cents to dollars
       amount: invoice.amount / 100,
     }));
 
-    return invoice[0];
+    console.log(invoice);
+    return invoice;
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch invoice.");
