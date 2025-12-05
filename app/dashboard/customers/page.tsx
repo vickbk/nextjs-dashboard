@@ -16,20 +16,18 @@ export default async function Page({
   searchParams: Promise<{ query: string; page: string }>;
 }) {
   const { query = "", page = "1" } = await searchParams;
-  const totalPages = await fetchCustomersPages(query);
 
   return (
     <article>
       <h1 className={`${lusitana.className} text-2xl`}>Customers</h1>
 
-      <Search placeholder="Search customers..." />
+      <div className="mt-4 md:mt-8">
+        <Search placeholder="Search customers..." />
+      </div>
 
       <Suspense key={query + page} fallback={<InvoicesTableSkeleton />}>
         <Table query={query} currentPage={page} />
       </Suspense>
-      <div className="mt-5 flex w-full justify-center">
-        <Pagination totalPages={totalPages} />
-      </div>
     </article>
   );
 }
